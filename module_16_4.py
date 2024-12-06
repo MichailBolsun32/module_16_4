@@ -48,7 +48,11 @@ async def create_message(username: Annotated[str, Path(min_length=5,
                                       example='24'
                                       )]) -> User:
 
-    new_user = User(id=len(users) + 1,username=username, age=age)
+    if users:
+        new_user = User(id=users[-1].id + 1, username=username, age=age)
+    else:
+        new_user = User(id=1, username=username, age=age)
+
     users.append(new_user)
     return new_user
 
